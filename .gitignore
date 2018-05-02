@@ -3,3 +3,4 @@
 *.tsv
 data
 venv
+.idea
