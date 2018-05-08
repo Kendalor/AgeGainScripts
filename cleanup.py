@@ -30,7 +30,16 @@ def subjFile2List(in_File):
     #print out
     return out
 
-def main(file,out_file,subj_file,rows):
+def getDataStart(file):
+    f=open(file)
+    column=[]
+    for i in range(0,100):
+        column.append(len(f.readline().split("\t")))
+    test=[[i for i,value in it] for key,it in itertools.groupby(enumerate(column), key=operator.itemgetter(1)) if key !=0]
+    return test[-1][0]
+
+def main(file,out_file,subj_file):
+    rows=getDataStart(file)
     df = pd.read_csv(file,sep="\t",skiprows=rows,index_col=0)
     print "Indices: ", df.index.values
     if(subj_file != None):
@@ -85,6 +94,5 @@ if __name__ == "__main__":
     parser.add_argument("-i",metavar="IN_FILE",type=str,help="path/name of the ODM File to clean",required=True)
     parser.add_argument("-o",metavar="OUT_FILE",type=str,help="path/name of the Outfile as csv",required=True)
     parser.add_argument("-s",metavar="subj_file",type=str,help="path/filename of the list of subjects to remove")
-    parser.add_argument("-rows",metavar="num_rows",type=int,help="Number of rows to skip in In_File",required=True)
     param = parser.parse_args()
     main(param.i,param.o,param.s,param.rows)
