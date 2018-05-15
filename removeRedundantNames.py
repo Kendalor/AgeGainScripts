@@ -21,25 +21,28 @@ class Variable:
             return True
         else:
             return False
-
-
-
-colums=df.columns.values
-
-nomeds=[s for s in colums if "REAL" in s or "STRING" in s]
-vars=[Variable(s) for s in nomeds]
+#print items in list in seperate lines
 def printasline(tmp):
     for i in tmp:
         print i
-
+#initialize variables from column names and return a list of basenames for all variables
 def reduceNames(tmp):
     l=[Variable(s).n_name for s in tmp]
     l=list(set(l))
     return l
-print len(nomeds)
+
+# get column names
+colums=df.columns.values
+# get column names without medication columns as they follow another format
+nomeds=[s for s in colums if "REAL" in s or "STRING" in s]
+#initialize columns as List of variable objects
+print "Length of NoMed-Itmes: ",len(nomeds)
+#get list of Basenames for all variables
 basenames=reduceNames(nomeds)
-print len(basenames)
+print "Length of NoMed-Base-Items: ",len(basenames)
+#initialize columns as List of variable objects
 vars=[Variable(s) for s in nomeds]
+#For each basename-Item
 for i in basenames:
     print "Basename: ",i
     t_vars=[s for s in vars if s.n_name == i]
