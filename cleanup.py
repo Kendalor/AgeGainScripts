@@ -2,6 +2,8 @@ import pandas as pd
 import natsort
 import numpy as np
 import argparse
+import itertools
+import operator
 
 def dropAndCleanID(df,subj):
     if subj in df.index:
@@ -95,4 +97,4 @@ if __name__ == "__main__":
     parser.add_argument("-o",metavar="OUT_FILE",type=str,help="path/name of the Outfile as csv",required=True)
     parser.add_argument("-s",metavar="subj_file",type=str,help="path/filename of the list of subjects to remove")
     param = parser.parse_args()
-    main(param.i,param.o,param.s,param.rows)
+    main(param.i,param.o,param.s)

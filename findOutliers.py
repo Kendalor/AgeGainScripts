@@ -3,7 +3,7 @@ import numpy as np
 import argparse
 
 def main(param):
-    df=pd.read_csv(param.in_file,sep=param.delimiter,decimal=param.decimal)
+    df=pd.read_csv(param.i,sep=param.delimiter,decimal=param.decimal)
     cols=df.columns.values
     print cols
     print "Total Cols: ",len(cols)
@@ -24,15 +24,16 @@ def main(param):
 
     print df_out
     df_out=df_out.sort_values("Study Subject ID")
-    df_out.to_csv(param.out_file,header=True,index=False,decimal=param.decimal,sep=param.delimiter)
+    df_out.to_csv(param.o,header=True,index=False,decimal=param.decimal,sep=param.delimiter)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Finds Outliers in a csv file per column")
-    parser.add_argument("-i",metavar="IN_FILE",type=str,help="path/name of the CSV File to clean",required=True)
-    parser.add_argument("-o",metavar="OUT_FILE",type=str,default="outliers.csv",help="path/name of the Outfile as csv",required=False)
+    parser.add_argument("-i",metavar="in_file",type=str,help="path/name of the CSV File to clean",required=True)
+    parser.add_argument("-o",metavar="out_file",type=str,default="outliers.csv",help="path/name of the Outfile as csv",required=False)
     parser.add_argument("-d",metavar="x",type=float,default=3,help="Outliers if abs(x-mean)> d*std")
     parser.add_argument("-delimiter", metavar="delimiter", type=str,default=";", help="delimiter used in CSV File", required=False)
     parser.add_argument("-decimal", metavar="decimal", type=str,default=",", help="decimal separator used in CSV File", required=False)
 
     param = parser.parse_args()
+    print param
     main(param)
